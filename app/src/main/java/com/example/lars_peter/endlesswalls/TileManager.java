@@ -22,6 +22,7 @@ public class TileManager
     private int level = 1;
     private static LevelIncrementor lvlIncrementor;
 
+
     public TileManager(int _playerGap, int _tileGap, int _tileHeight, int _color)
     {
         this.playerGap = _playerGap;
@@ -36,7 +37,7 @@ public class TileManager
     {
         if(instance == null)
         {
-            instance = new TileManager(120, 120, 35, Color.GRAY);
+            instance = new TileManager(250, 300, 35, Color.GRAY);
 
             lvlIncrementor = new LevelIncrementor();
             lvlIncrementor.setRunning(true);
@@ -70,8 +71,8 @@ public class TileManager
     {
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
-        float speed = Constants.SCREEN_HEIGHT/50000.0f;
-        speed = speed * (level / 4);
+        float speed = Constants.SCREEN_HEIGHT/100000.0f;
+        speed = speed * (level / 8);
 
         for(LevelTile tile : tiles)
         {

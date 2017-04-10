@@ -7,7 +7,7 @@ package com.example.lars_peter.endlesswalls;
 public class LevelIncrementor extends Thread
 {
     private long incrementLvlTimer;
-    private long incrementDelay = 10000;
+    private long incrementDelay = 1000;
     private boolean countingUp;
     private boolean running;
     private TileManager tileManager;

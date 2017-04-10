@@ -21,7 +21,7 @@ public class LevelTile implements LevelObject
     public LevelTile(int _rectheight, int _color, int _startX, int _startY, int _playerGap)
     {
         this.color = _color;
-        int rndGap = rnd.nextInt(200);
+        int rndGap = rnd.nextInt(300);
 
         if (rndGap<30) { rndGap = rnd.nextInt(200);}
 
