@@ -14,6 +14,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private GameThread gameThreadThread;
     private TileManager tileManager;
+    HighScore ScoreHigh = new HighScore();
 
     public GameView(Context _context)
     {
@@ -69,5 +70,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         _canvas.drawColor(Color.WHITE);
 
         tileManager.draw(_canvas);
+        ScoreHigh.draw(_canvas);
     }
 }
