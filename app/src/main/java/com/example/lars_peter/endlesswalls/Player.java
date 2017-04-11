@@ -84,7 +84,7 @@ public class Player {
             }
         }
 
-        else if(playerRect.intersect(_other.GetRect()))
+        else if(Rect.intersects(playerRect,_other.GetRect()))
         {
             DoCollision(_other);
 
@@ -93,16 +93,12 @@ public class Player {
 
     private void DoCollision(Enemy _other)
     {
-        //EKSEMPEL
-//        if(_other instanceof Trap)
-//        {
-//           Highscore-51203102301;
-//        }
+
 
         if(_other instanceof LevelCollectable)
         {
-            HighScore.counter += 10;
-            _other.destroy();
+            HighScore.counter += 1000;
+            ((LevelCollectable) _other).destroy();
         }
     }
 
@@ -147,10 +143,10 @@ public class Player {
                 pos.x+playerRect.width()/2,pos.y+playerRect.height()/2);
 
 
-        if(pos.y > Constants.SCREEN_HEIGHT - playerRect.height())
-        {
-            playerAlive = false;
-        }
+//        if(pos.y > Constants.SCREEN_HEIGHT - playerRect.height())
+//        {
+//            playerAlive = false;
+//        }
     }
 
     public boolean Wallforce(Rect _enemyRect, Point _point)
