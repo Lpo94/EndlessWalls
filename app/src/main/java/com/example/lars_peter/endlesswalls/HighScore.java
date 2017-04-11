@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class HighScore extends AppCompatActivity {
 
-    public int counter = 0 ;
+    public static int counter = 0 ;
     public int highScore;
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
