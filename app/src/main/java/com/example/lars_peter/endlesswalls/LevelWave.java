@@ -12,7 +12,7 @@ import java.util.Random;
  * Created by SharkGaming on 07/04/2017.
  */
 
-public class LevelTile extends Enemy implements LevelObject
+public class LevelWave implements LevelObject
 {
     Calendar c = Calendar.getInstance();
     private int color;
@@ -21,7 +21,7 @@ public class LevelTile extends Enemy implements LevelObject
     private Rect rect3;
     Random rnd = new Random();
 
-    public LevelTile(int _rectheight, int _color, int _startX, int _startY, int _playerGap)
+    public LevelWave(int _rectheight, int _color, int _startX, int _startY, int _playerGap)
     {
         this.color = _color;
         int rndGap = rnd.nextInt(300);
@@ -98,11 +98,5 @@ public class LevelTile extends Enemy implements LevelObject
         _canvas.drawRect(rect1, paint);
         _canvas.drawRect(rect2, paint);
         _canvas.drawRect(rect3, paint);
-    }
-
-    @Override
-    public void update()
-    {
-
     }
 }

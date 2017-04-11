@@ -36,14 +36,11 @@ public class LevelIncrementor extends Thread
             {
                 currentTime = System.currentTimeMillis();
 
-                if(currentTime > incrementLvlTimer)
-                {
                     if(currentTime > incrementLvlTimer)
                     {
                         tileManager.incrementLevel();
                         countingUp = false;
                     }
-                }
             }
         }
     }
