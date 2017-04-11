@@ -54,7 +54,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder _holder)
     {
-        boolean retry = true;
         while(true)
         {
             try
@@ -63,7 +62,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
                 gameThreadThread.join();
             }
             catch (Exception e) {e.printStackTrace();}
-            retry = false;
         }
     }
 

@@ -27,7 +27,8 @@ public class ViewTrue extends SurfaceView implements Runnable {
 
     }
 
-    private void update() {
+    private void update()
+    {
 
     }
 
