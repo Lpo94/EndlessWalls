@@ -10,11 +10,11 @@ import java.util.Random;
  * Created by SharkGaming on 10/04/2017.
  */
 
-public class LevelCollectable implements LevelObject
+public class LevelCollectable extends Enemy implements LevelObject
 {
 
     private int color;
-    private Rect rect1;
+
     private Random rnd = new Random();
     private TileManager tileManager;
     private int lifetime;
@@ -31,14 +31,9 @@ public class LevelCollectable implements LevelObject
         int bottom = rndTop + 50;
 
         // left, top, right, bottom
-        rect1 = new Rect(rndLeft, rndTop, right, bottom);
+        rect = new Rect(rndLeft, rndTop, right, bottom);
     }
 
-    @Override
-    public Rect getRect1()
-    {
-        return rect1;
-    }
 
 
     @Override
@@ -46,6 +41,11 @@ public class LevelCollectable implements LevelObject
     {
         Paint paint = new Paint();
         paint.setColor(color);
-        _canvas.drawRect(rect1, paint);
+        _canvas.drawRect(rect, paint);
+    }
+
+    @Override
+    public Rect getRect1() {
+        return GetRect();
     }
 }

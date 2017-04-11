@@ -46,7 +46,7 @@ public class TileManager
     {
         if(instance == null)
         {
-            instance = new TileManager(250, 300, 35, Color.GRAY);
+            instance = new TileManager(250, 300, 75, Color.GRAY);
 
             lvlIncrementor = new LevelIncrementor();
             lvlIncrementor.setRunning(true);

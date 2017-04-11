@@ -41,47 +41,20 @@ public class Player {
             LevelWave tempObj = (LevelWave)_other;
             Rect tempRect;
 
-            if(playerRect.intersect(tempObj.getRect1()))
+            if(Rect.intersects(playerRect,tempObj.getRect1()))
             {
-                tempRect = tempObj.getRect1();
-
-                if(playerRect.top < tempRect.bottom)
-                {
-                    pos.y = tempRect.bottom+(tempRect.height()/10);
-                }
-                else if(playerRect.bottom > tempRect.top)
-                {
-                    pos.y = tempRect.top-(tempRect.height()/10);
-                }
+                WallCollision(tempObj.getRect1());
                 return true;
             }
-            else if(playerRect.intersect(tempObj.getRect2()))
+            else if(Rect.intersects(playerRect,tempObj.getRect2()))
             {
-                tempRect = tempObj.getRect2();
-
-                if(playerRect.top < tempRect.bottom)
-                {
-                    pos.y = tempRect.bottom+(tempRect.height()/10);
-                }
-                else if(playerRect.bottom > tempRect.top)
-                {
-                    pos.y = tempRect.top-(tempRect.height()/10);
-                }
+                WallCollision(tempObj.getRect2());
                 return true;
             }
-            else if(playerRect.intersect(tempObj.getRect3()))
+            else if(Rect.intersects(playerRect,tempObj.getRect3()))
             {
 
-                tempRect = tempObj.getRect3();
-
-                if(playerRect.top < tempRect.bottom)
-                {
-                    pos.y = tempRect.bottom+(tempRect.height()/10);
-                }
-                else if(playerRect.bottom > tempRect.top)
-                {
-                    pos.y = tempRect.top-(tempRect.height()/10);
-                }
+               WallCollision(tempObj.getRect3());
                 return true;
             }
             return false;
@@ -89,7 +62,7 @@ public class Player {
 
         else if(playerRect.intersect(_other.GetRect()))
         {
-            DoCollision(_other);
+//            DoCollision(_other);
             return true;
         }
 
@@ -111,23 +84,23 @@ public class Player {
 
     private void WallCollision(Rect _wallRect)
     {
-        if(playerRect.top <= _wallRect.bottom)
+        if(playerRect.top < _wallRect.bottom)
         {
-            pos.y =+ _wallRect.height()/2;
+            pos.y += (_wallRect.height()/5);
         }
-        else if(playerRect.bottom >= _wallRect.top)
+        else if(playerRect.bottom > _wallRect.top)
         {
-            pos.y =- _wallRect.height()/2;
+            pos.y -= (_wallRect.height()/5);
         }
         //LEFT
         if(playerRect.right < _wallRect.left)
         {
-            pos.x =- _wallRect.width()/2;
+            pos.x -= _wallRect.width()/5;
         }
         //Right
-        if(playerRect.left > _wallRect.left)
+        else if(playerRect.left > _wallRect.left)
         {
-            pos.y =- _wallRect.width()/2;
+            pos.y -= _wallRect.width()/5;
         }
     }
 
