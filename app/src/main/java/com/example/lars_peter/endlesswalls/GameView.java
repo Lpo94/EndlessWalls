@@ -7,6 +7,8 @@ import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Created by SharkGaming on 07/04/2017.
  */
@@ -16,6 +18,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private GameThread gameThreadThread;
     private TileManager tileManager;
     private HighScore highScore = new HighScore();
+    private ArrayList<Enemy> enemyList;
 
     private Player player;
     private OrientationData orientationData;
@@ -34,6 +37,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         orientationData = new OrientationData(_context);
         orientationData.register();
         setFocusable(true);
+        enemyList = new ArrayList<>();
     }
 
 
@@ -77,11 +81,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
             float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
 
-            player.GetPos().x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
-            player.GetPos().y -= Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
+            player.GetPos().x += Math.abs(xSpeed*elapsedTime) > 10 ? xSpeed*elapsedTime : 0;
+            player.GetPos().y -= Math.abs(ySpeed*elapsedTime) > 10 ? ySpeed*elapsedTime : 0;
         }
         player.update();
         highScore.update();
+        CheckCollision();
 
     }
 
@@ -94,4 +99,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         tileManager.draw(_canvas);
         highScore.draw(_canvas);
     }
+
+    public void CheckCollision()
+    {
+        for(LevelWave tile : tileManager.GetTiles())
+        {
+            player.PlayerCollision(tile);
+        }
+
+        for(Enemy enemy : enemyList)
+        {
+            player.PlayerCollision(enemy);
+        }
+    }
+
+
 }

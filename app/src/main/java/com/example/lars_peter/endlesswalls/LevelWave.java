@@ -12,7 +12,7 @@ import java.util.Random;
  * Created by SharkGaming on 07/04/2017.
  */
 
-public class LevelWave implements LevelObject
+public class LevelWave extends Enemy implements LevelObject
 {
     Calendar c = Calendar.getInstance();
     private int color;

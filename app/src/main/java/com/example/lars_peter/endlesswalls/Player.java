@@ -14,6 +14,7 @@ public class Player {
 
     private Rect playerRect;
     private Point pos;
+    private int colour;
 
     public Rect GetRect()
     {
@@ -27,31 +28,81 @@ public class Player {
 
     public Player(Point _pos)
     {
+        colour = new Color().RED;
         pos = _pos;
         playerRect = new Rect(100,100,200,200);
     }
 
-/*
-    public void PlayerCollision(Enemy _other)
+    public boolean PlayerCollision(Enemy _other)
     {
+
         if(_other instanceof LevelWave)
         {
             LevelWave tempObj = (LevelWave)_other;
+            Rect tempRect;
 
-            if(playerRect.contains(tempObj.getRect1()))
+            if(Rect.intersects(playerRect,tempObj.getRect1()))
+            {
+                WallCollision(tempObj.getRect1());
+                return true;
+            }
+            else if(Rect.intersects(playerRect,tempObj.getRect2()))
+            {
+                WallCollision(tempObj.getRect2());
+                return true;
+            }
+            else if(Rect.intersects(playerRect,tempObj.getRect3()))
             {
 
+               WallCollision(tempObj.getRect3());
+                return true;
             }
+            return false;
+        }
 
+        else if(playerRect.intersect(_other.GetRect()))
+        {
+//            DoCollision(_other);
+            return true;
         }
 
 
 
 
+        return false;
+    }
+
+    private void DoCollision(Enemy _other)
+    {
+        if(_other instanceof LevelWave)
+        {
+
+        }
 
 
     }
-*/
+
+    private void WallCollision(Rect _wallRect)
+    {
+        if(playerRect.top < _wallRect.bottom)
+        {
+            pos.y += (_wallRect.height()/5);
+        }
+        else if(playerRect.bottom > _wallRect.top)
+        {
+            pos.y -= (_wallRect.height()/5);
+        }
+        //LEFT
+        if(playerRect.right < _wallRect.left)
+        {
+            pos.x -= _wallRect.width()/5;
+        }
+        //Right
+        else if(playerRect.left > _wallRect.left)
+        {
+            pos.y -= _wallRect.width()/5;
+        }
+    }
 
 
     public void update()
@@ -75,9 +126,10 @@ public class Player {
 
     public void Draw(Canvas _canvas)
     {
-        Paint paint = new Paint(Color.RED);
+        Paint paint = new Paint(colour);
         _canvas.drawRect(playerRect,paint);
     }
+
 
 
 
