@@ -31,11 +31,12 @@ public class Player {
         playerRect = new Rect(100,100,200,200);
     }
 
+/*
     public void PlayerCollision(Enemy _other)
     {
-        if(_other instanceof LevelTile)
+        if(_other instanceof LevelWave)
         {
-            LevelTile tempObj = (LevelTile)_other;
+            LevelWave tempObj = (LevelWave)_other;
 
             if(playerRect.contains(tempObj.getRect1()))
             {
@@ -50,6 +51,7 @@ public class Player {
 
 
     }
+*/
 
 
     public void update()

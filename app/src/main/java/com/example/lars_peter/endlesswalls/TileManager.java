@@ -25,7 +25,7 @@ public class TileManager
     private static CollectableSpawner collectableSpawner;
 
 
-    public TileManager(int _playerGap, int _tileGap, int _tileHeight, int _color)
+    private TileManager(int _playerGap, int _tileGap, int _tileHeight, int _color)
     {
         this.playerGap = _playerGap;
         this.tileGap = _tileGap;
@@ -114,3 +114,12 @@ public class TileManager
         }
     }
 }
+
+
+
+/*
+        1. Traps
+        2.Collision player til walls og player til collectables
+        3. Når collectables samles op skal de despawne(har lavet koden for det og commenteret det ud i tilemanager klassen)
+        4. spilleren dør når han rammer budnjlien
+        5. en retry skærm. Noget jeg har glemt?*/
