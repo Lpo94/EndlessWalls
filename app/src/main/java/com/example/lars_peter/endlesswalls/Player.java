@@ -49,63 +49,52 @@ public class Player {
         colour = new Color().RED;
         pos = _pos;
         playerRect = new Rect(100,100,200,200);
+        update();
     }
 
     public void PlayerCollision(Enemy _other)
     {
+        if(_other.active) {
+            if (_other instanceof LevelWave) {
+                LevelWave tempObj = (LevelWave) _other;
+                Rect tempRect = null;
 
-        if(_other instanceof LevelWave)
-        {
-            LevelWave tempObj = (LevelWave)_other;
-            Rect tempRect = null;
+                if (Rect.intersects(playerRect, tempObj.getRect1())) {
+                    tempRect = tempObj.getRect1();
+                    WallCollision(tempObj.getRect1());
+                } else if (Rect.intersects(playerRect, tempObj.getRect2())) {
+                    tempRect = tempObj.getRect2();
+                    WallCollision(tempObj.getRect2());
+                } else if (Rect.intersects(playerRect, tempObj.getRect3())) {
+                    tempRect = tempObj.getRect3();
+                    WallCollision(tempObj.getRect3());
+                }
 
-            if(Rect.intersects(playerRect,tempObj.getRect1()))
-            {
-                tempRect = tempObj.getRect1();
-                WallCollision(tempObj.getRect1());
-            }
-            else if(Rect.intersects(playerRect,tempObj.getRect2()))
-            {
-                tempRect = tempObj.getRect2();
-                WallCollision(tempObj.getRect2());
-            }
-            else if(Rect.intersects(playerRect,tempObj.getRect3()))
-            {
-                tempRect = tempObj.getRect3();
-                WallCollision(tempObj.getRect3());
-            }
-
-            if(tempRect != null)
-            {
-                while (!Wallforce(tempRect, pos))
-                {
-                    if(Wallforce(tempRect,pos))
-                    {
-                        break;
+                if (tempRect != null) {
+                    while (!Wallforce(tempRect, pos)) {
+                        if (Wallforce(tempRect, pos)) {
+                            break;
+                        }
                     }
                 }
+            } else if (Rect.intersects(playerRect, _other.GetRect())) {
+                DoCollision(_other);
             }
-        }
-
-        else if(Rect.intersects(playerRect,_other.GetRect()))
-        {
-            DoCollision(_other);
         }
     }
 
     private void DoCollision(Enemy _other)
     {
+        if(_other.active) {
+            if (_other instanceof LevelCollectable) {
+                HighScore.counter += 10;
+                ((LevelCollectable) _other).destroy();
+            }
 
-        if(_other instanceof LevelCollectable)
-        {
-            HighScore.counter += 10;
-            ((LevelCollectable) _other).destroy();
-        }
-
-        if(_other instanceof Traps)
-        {
-            HighScore.counter -= 1000;
-            ((Traps) _other).destroy();
+            if (_other instanceof Traps) {
+                HighScore.counter -= 1000;
+                ((Traps) _other).destroy();
+            }
         }
     }
 

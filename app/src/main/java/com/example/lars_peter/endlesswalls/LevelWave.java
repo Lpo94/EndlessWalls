@@ -92,11 +92,13 @@ public class LevelWave extends Enemy implements LevelObject
     @Override
     public void draw(Canvas _canvas)
     {
-        _Color();
-        Paint paint = new Paint();
-        paint.setColor(color);
-        _canvas.drawRect(rect1, paint);
-        _canvas.drawRect(rect2, paint);
-        _canvas.drawRect(rect3, paint);
+        if(active) {
+            _Color();
+            Paint paint = new Paint();
+            paint.setColor(color);
+            _canvas.drawRect(rect1, paint);
+            _canvas.drawRect(rect2, paint);
+            _canvas.drawRect(rect3, paint);
+        }
     }
 }
