@@ -14,6 +14,7 @@ public class TileManager
 
     private ArrayList<LevelWave> tiles;
     private ArrayList<LevelCollectable> collectables;
+    private ArrayList<Traps> traps;
     private int playerGap;
     private int tileGap;
     private int tileHeight;
@@ -33,6 +34,8 @@ public class TileManager
         return collectables;
     }
 
+    public  ArrayList<Traps> GetTrap() {return traps;}
+
     private TileManager(int _playerGap, int _tileGap, int _tileHeight, int _color)
     {
         this.playerGap = _playerGap;
@@ -43,6 +46,7 @@ public class TileManager
         createWaves();
 
         collectables = new ArrayList<>();
+        traps = new ArrayList<>();
     }
 
     public static TileManager getInstance()
@@ -83,6 +87,7 @@ public class TileManager
         return level;
     }
     public ArrayList getCollectables() {return collectables;}
+    public ArrayList getTrap() {return traps;}
     public void update()
     {
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);
@@ -113,6 +118,11 @@ public class TileManager
         for(LevelCollectable collectable : collectables)
         {
             collectable.draw(_canvas);
+        }
+
+        for(Traps _traps : traps)
+        {
+            _traps.draw(_canvas);
         }
     }
 }

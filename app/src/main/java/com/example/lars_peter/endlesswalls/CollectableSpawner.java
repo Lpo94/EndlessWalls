@@ -41,6 +41,7 @@ public class CollectableSpawner extends Thread
                 if(currentTime > incrementLvlTimer)
                 {
                     tileManager.getCollectables().add(new LevelCollectable(Color.GREEN));
+                    tileManager.getTrap().add(new Traps(Color.BLUE));
                     countingUp = false;
                 }
             }

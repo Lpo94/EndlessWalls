@@ -3,6 +3,7 @@ package com.example.lars_peter.endlesswalls;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ public class Menu extends AppCompatActivity {
     RelativeLayout currentLayout;
     static Calendar c = Calendar.getInstance();
     static int hour = c.get(Calendar.HOUR_OF_DAY);
+    Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,15 @@ public class Menu extends AppCompatActivity {
 
     public void Start(View v)
     {
+        vibrator.vibrate(50);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+    }
+
+    public void Exit(View v)
+    {
+        vibrator.vibrate(50);
+        finish();
     }
 
     @Override
