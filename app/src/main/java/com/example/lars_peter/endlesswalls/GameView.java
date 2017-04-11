@@ -20,17 +20,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private TileManager tileManager;
     private HighScore highScore = new HighScore();
     private ArrayList<Enemy> enemyList;
-
+    private Context context;
     private Player player;
     private OrientationData orientationData;
 
     private long frameTime;
 
+    public static boolean gameRunning = true;
+
 
     public GameView(Context _context)
     {
         super(_context);
-
+        gameRunning = true;
         getHolder().addCallback(this);
         gameThreadThread = new GameThread(getHolder(), this);
         tileManager = TileManager.getInstance();
@@ -40,6 +42,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         orientationData.register();
         setFocusable(true);
         enemyList = new ArrayList<>();
+        context = _context;
     }
 
 
@@ -73,30 +76,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     public void update()
     {
-        tileManager.update();
-        int elapsedTime = (int)(System.currentTimeMillis() - frameTime);
-        frameTime = System.currentTimeMillis();
-        if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
-            float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
-            float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
+        if(gameRunning) {
+            tileManager.update();
+            int elapsedTime = (int) (System.currentTimeMillis() - frameTime);
+            frameTime = System.currentTimeMillis();
+            if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
+                float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
+                float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
 
-            player.xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
-            player.ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+                player.xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 1000f;
+                player.ySpeed = pitch * Constants.SCREEN_HEIGHT / 1000f;
 
-            player.GetPos().x += Math.abs( player.xSpeed*elapsedTime) > 10 ?  player.xSpeed*elapsedTime : 0;
-            player.GetPos().y -= Math.abs(player.ySpeed*elapsedTime) > 10 ? player.ySpeed*elapsedTime : 0;
+                player.GetPos().x += Math.abs(player.xSpeed * elapsedTime) > 10 ? player.xSpeed * elapsedTime : 0;
+                player.GetPos().y -= Math.abs(player.ySpeed * elapsedTime) > 10 ? player.ySpeed * elapsedTime : 0;
+            }
+            player.update();
+            highScore.update();
+            CheckCollision();
         }
-        player.update();
-        highScore.update();
-        CheckCollision();
-
-        if(player.GetplayerAlive() == false)
-        {
-            how is it not of the working!??
-//           highScore.EndGame();
- /*           Intent i = new Intent(context, Menu.class);
-            context.startActivity(i);*/
-        }
+//
+//        if(player.GetplayerAlive() == false)
+//        {
+//            highScore.EndGame();
+//            Intent i = new Intent(context, Menu.class);
+//            context.startActivity(i);
+//            gameRunning = false;
+//        }
 
     }
 
