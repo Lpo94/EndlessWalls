@@ -80,11 +80,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
             float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
 
-            float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
-            float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+            player.xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
+            player.ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
 
-            player.GetPos().x += Math.abs(xSpeed*elapsedTime) > 10 ? xSpeed*elapsedTime : 0;
-            player.GetPos().y -= Math.abs(ySpeed*elapsedTime) > 10 ? ySpeed*elapsedTime : 0;
+            player.GetPos().x += Math.abs( player.xSpeed*elapsedTime) > 10 ?  player.xSpeed*elapsedTime : 0;
+            player.GetPos().y -= Math.abs(player.ySpeed*elapsedTime) > 10 ? player.ySpeed*elapsedTime : 0;
         }
         player.update();
         highScore.update();
