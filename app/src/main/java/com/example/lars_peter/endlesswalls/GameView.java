@@ -1,6 +1,7 @@
 package com.example.lars_peter.endlesswalls;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -34,6 +35,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         gameThreadThread = new GameThread(getHolder(), this);
         tileManager = TileManager.getInstance();
         player = new Player(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
+        player.SetplayerAlive(true);
         orientationData = new OrientationData(_context);
         orientationData.register();
         setFocusable(true);
@@ -50,7 +52,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder _holder, int _format, int _width, int _height)
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
     {
 
     }
@@ -88,6 +90,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         highScore.update();
         CheckCollision();
 
+        if(player.GetplayerAlive() == false)
+        {
+            how is it not of the working!??
+//           highScore.EndGame();
+ /*           Intent i = new Intent(context, Menu.class);
+            context.startActivity(i);*/
+        }
+
     }
 
     @Override
@@ -107,11 +117,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             player.PlayerCollision(tile);
         }
 
+        for(LevelCollectable collectable : tileManager.Getcollectables())
+        {
+            player.PlayerCollision(collectable);
+        }
+
         for(Enemy enemy : enemyList)
         {
             player.PlayerCollision(enemy);
         }
     }
-
-
 }

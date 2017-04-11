@@ -34,7 +34,10 @@ public class LevelCollectable extends Enemy implements LevelObject
         rect = new Rect(rndLeft, rndTop, right, bottom);
     }
 
-
+    public void destroy()
+    {
+        tileManager.getCollectables().remove(this);
+    }
 
     @Override
     public void draw(Canvas _canvas)

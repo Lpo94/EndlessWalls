@@ -15,6 +15,18 @@ public class Player {
     private Rect playerRect;
     private Point pos;
     private int colour;
+    private boolean playerAlive;
+
+
+    public boolean GetplayerAlive()
+    {
+        return playerAlive;
+    }
+
+    public void SetplayerAlive(boolean _playerAlive)
+    {
+        playerAlive = _playerAlive;
+    }
 
     public float xSpeed;
     public float ySpeed;
@@ -57,7 +69,7 @@ public class Player {
             else if(Rect.intersects(playerRect,tempObj.getRect3()))
             {
                 tempRect = tempObj.getRect3();
-               WallCollision(tempObj.getRect3());
+                WallCollision(tempObj.getRect3());
             }
 
             if(tempRect != null)
@@ -74,7 +86,7 @@ public class Player {
 
         else if(playerRect.intersect(_other.GetRect()))
         {
-         DoCollision(_other);
+            DoCollision(_other);
 
         }
     }
@@ -87,7 +99,11 @@ public class Player {
 //           Highscore-51203102301;
 //        }
 
-
+        if(_other instanceof LevelCollectable)
+        {
+            HighScore.counter += 10;
+            _other.destroy();
+        }
     }
 
     private void WallCollision(Rect _wallRect)
@@ -130,6 +146,11 @@ public class Player {
         playerRect.set(pos.x-playerRect.width()/2,pos.y -playerRect.height()/2,
                 pos.x+playerRect.width()/2,pos.y+playerRect.height()/2);
 
+
+        if(pos.y > Constants.SCREEN_HEIGHT - playerRect.height())
+        {
+            playerAlive = false;
+        }
     }
 
     public boolean Wallforce(Rect _enemyRect, Point _point)
@@ -148,9 +169,4 @@ public class Player {
         Paint paint = new Paint(colour);
         _canvas.drawRect(playerRect,paint);
     }
-
-
-
-
-
 }

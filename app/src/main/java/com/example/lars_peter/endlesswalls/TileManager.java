@@ -8,7 +8,6 @@ import java.util.ArrayList;
 /**
  * Created by SharkGaming on 07/04/2017.
  */
-
 public class TileManager
 {
     private static TileManager instance;
@@ -22,13 +21,17 @@ public class TileManager
     private long startTime;
     private int level = 1;
     private static LevelIncrementor lvlIncrementor;
-    //private static CollectableSpawner collectableSpawner;
+    private static CollectableSpawner collectableSpawner;
 
     public  ArrayList<LevelWave> GetTiles()
     {
         return tiles;
     }
 
+    public  ArrayList<LevelCollectable> Getcollectables()
+    {
+        return collectables;
+    }
 
     private TileManager(int _playerGap, int _tileGap, int _tileHeight, int _color)
     {
@@ -46,15 +49,15 @@ public class TileManager
     {
         if(instance == null)
         {
-            instance = new TileManager(250, 300, 75, Color.GRAY);
+            instance = new TileManager(250, 300, 35, Color.GRAY);
 
             lvlIncrementor = new LevelIncrementor();
             lvlIncrementor.setRunning(true);
             lvlIncrementor.start();
 
-//            collectableSpawner = new CollectableSpawner();
-//            collectableSpawner.setRunning(true);
-//            collectableSpawner.start();
+            collectableSpawner = new CollectableSpawner();
+            collectableSpawner.setRunning(true);
+            collectableSpawner.start();
         }
         return instance;
     }
@@ -107,10 +110,10 @@ public class TileManager
             tile.draw(_canvas);
         }
 
-//        for(LevelCollectable collectable : collectables)
-//        {
-//            collectable.draw(_canvas);
-//        }
+        for(LevelCollectable collectable : collectables)
+        {
+            collectable.draw(_canvas);
+        }
     }
 }
 
@@ -120,6 +123,5 @@ public class TileManager
         1. Traps
         2.Collision player til walls og player til collectables
         3. Når collectables samles op skal de despawne(har lavet koden for det og commenteret det ud i tilemanager klassen)
-        4. spilleren dør når han rammer budnjlien
-        5. en retry skærm. Noget jeg har glemt?*/
+        4. spilleren dør når han rammer budnjlien*/
 
