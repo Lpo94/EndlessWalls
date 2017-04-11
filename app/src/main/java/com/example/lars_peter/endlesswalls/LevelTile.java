@@ -1,9 +1,11 @@
 package com.example.lars_peter.endlesswalls;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import java.util.Calendar;
 import java.util.Random;
 
 /**
@@ -12,6 +14,7 @@ import java.util.Random;
 
 public class LevelTile extends Enemy implements LevelObject
 {
+    Calendar c = Calendar.getInstance();
     private int color;
     private Rect rect1;
     private Rect rect2;
@@ -22,13 +25,25 @@ public class LevelTile extends Enemy implements LevelObject
     {
         this.color = _color;
         int rndGap = rnd.nextInt(300);
-
         if (rndGap<30) { rndGap = rnd.nextInt(200);}
 
         // left, top, right, bottom
         rect1 = new Rect(0, _startY, _startX, _startY +_rectheight);
         rect2 = new Rect(_startX + _playerGap , _startY, _startX + _playerGap + rndGap, _startY +_rectheight);
         rect3 = new Rect(_startX + (_playerGap *2) + rndGap, _startY, Constants.SCREEN_WIDTH, _startY +_rectheight);
+    }
+
+    public void _Color()
+    {
+        if(Menu.hour >= 6 && Menu.hour < 20)
+        {
+            color = Color.BLACK;
+        }
+
+        else
+        {
+            color = Color.RED;
+        }
     }
 
 //    public boolean playerCollision(Player _player) for alle 3 rectangler
@@ -77,6 +92,7 @@ public class LevelTile extends Enemy implements LevelObject
     @Override
     public void draw(Canvas _canvas)
     {
+        _Color();
         Paint paint = new Paint();
         paint.setColor(color);
         _canvas.drawRect(rect1, paint);

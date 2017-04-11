@@ -14,8 +14,8 @@ public class Menu extends AppCompatActivity {
 
     static MediaPlayer music;
     RelativeLayout currentLayout;
-    Calendar c = Calendar.getInstance();
-    int hour = c.get(Calendar.HOUR_OF_DAY);
+    static Calendar c = Calendar.getInstance();
+    static int hour = c.get(Calendar.HOUR_OF_DAY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +32,12 @@ public class Menu extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        music = MediaPlayer.create(this, R.raw.music);
-        music.setLooping(true);
-        music.setVolume(0.1f, 0.1f);
-        music.start();
+        if(music == null) {
+            music = MediaPlayer.create(this, R.raw.music);
+            music.setLooping(true);
+            music.setVolume(0.1f, 0.1f);
+            music.start();
+        }
         currentLayout = (RelativeLayout) findViewById(R.id.main_layout);
 
         if(hour >= 6 && hour < 20) {
