@@ -36,8 +36,8 @@ public class LevelCollectable extends Enemy implements LevelObject
 
     public void destroy()
     {
-        tileManager.getCollectables().remove(this);
-        this.destroy();
+        tileManager.GetCollectables().remove(this);
+
     }
 
     @Override

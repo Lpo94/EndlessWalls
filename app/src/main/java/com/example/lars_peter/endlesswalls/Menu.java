@@ -21,13 +21,14 @@ public class Menu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
     }
 
     public void Start(View v)
     {
-        vibrator.vibrate(50);
+        //vibrator.vibrate(50);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }

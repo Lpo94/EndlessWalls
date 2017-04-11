@@ -38,9 +38,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         tileManager = TileManager.getInstance();
         player = new Player(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
         player.SetplayerAlive(true);
+
         orientationData = new OrientationData(_context);
         orientationData.register();
+
         setFocusable(true);
+
         enemyList = new ArrayList<>();
         context = _context;
     }
@@ -122,14 +125,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             player.PlayerCollision(tile);
         }
 
-        for(LevelCollectable collectable : tileManager.Getcollectables())
+        for(Traps _trap: tileManager.GetTrap())
+        {
+            player.PlayerCollision(_trap);
+        }
+
+        for(LevelCollectable collectable : tileManager.GetCollectables())
         {
             player.PlayerCollision(collectable);
         }
 
-        for(Enemy enemy : enemyList)
-        {
-            player.PlayerCollision(enemy);
-        }
     }
 }

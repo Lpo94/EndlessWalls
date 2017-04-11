@@ -36,8 +36,8 @@ public class Traps extends Enemy implements LevelObject
 
     public void destroy()
     {
-        tileManager.getTrap().remove(this);
-        this.destroy();
+        tileManager.GetTrap().remove(this);
+
     }
 
     @Override

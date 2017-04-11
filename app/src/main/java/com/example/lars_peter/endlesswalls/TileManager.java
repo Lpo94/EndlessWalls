@@ -29,7 +29,7 @@ public class TileManager
         return tiles;
     }
 
-    public  ArrayList<LevelCollectable> Getcollectables()
+    public  ArrayList<LevelCollectable> GetCollectables()
     {
         return collectables;
     }
@@ -86,8 +86,9 @@ public class TileManager
     {
         return level;
     }
-    public ArrayList getCollectables() {return collectables;}
-    public ArrayList getTrap() {return traps;}
+
+
+
     public void update()
     {
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);

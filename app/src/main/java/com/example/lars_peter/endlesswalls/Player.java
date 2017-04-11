@@ -85,7 +85,7 @@ public class Player {
             }
         }
 
-        else if(playerRect.intersect(_other.GetRect()))
+        else if(Rect.intersects(playerRect,_other.GetRect()))
         {
             DoCollision(_other);
         }
@@ -97,13 +97,13 @@ public class Player {
         if(_other instanceof LevelCollectable)
         {
             HighScore.counter += 10;
-            //_other.destroy();
+            ((LevelCollectable) _other).destroy();
         }
 
         if(_other instanceof Traps)
         {
             HighScore.counter -= 1000;
-            //_other.destroy();
+            ((Traps) _other).destroy();
         }
     }
 
