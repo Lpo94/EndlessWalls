@@ -161,6 +161,11 @@ public class TileManager
             _trap.active = false;
         }
 
+        for(LevelWave _wave: tiles)
+        {
+            _wave.active = false;
+        }
+
         collectables.clear();
         traps.clear();
     }
