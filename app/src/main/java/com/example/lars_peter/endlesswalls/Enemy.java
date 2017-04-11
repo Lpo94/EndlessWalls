@@ -8,6 +8,7 @@ import android.graphics.Rect;
 
 public class Enemy {
     protected Rect rect;
+    protected boolean active = true;
 
     public Rect GetRect()
     {

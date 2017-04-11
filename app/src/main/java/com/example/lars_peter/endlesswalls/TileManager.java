@@ -101,6 +101,20 @@ public class TileManager
             tile.incrementY(speed * elapsedTime);
         }
 
+        for(LevelCollectable collectable : collectables)
+        {
+            if(collectable.active) {
+                collectable.update();
+            }
+        }
+
+        for(Traps _trap : traps)
+        {
+            if(_trap.active) {
+                _trap.update();
+            }
+        }
+
         if(tiles.get(tiles.size()-1).getRect1().top > Constants.SCREEN_HEIGHT)
         {
             int xStart = ((int)(Math.random()* Constants.SCREEN_WIDTH - playerGap));
@@ -113,18 +127,42 @@ public class TileManager
     {
         for(LevelWave tile : tiles)
         {
-            tile.draw(_canvas);
+            if(tile.active) {
+                tile.draw(_canvas);
+            }
         }
 
         for(LevelCollectable collectable : collectables)
         {
-            collectable.draw(_canvas);
+            if(collectable.active) {
+                collectable.draw(_canvas);
+            }
         }
 
         for(Traps _traps : traps)
         {
-            _traps.draw(_canvas);
+            if(_traps.active) {
+                _traps.draw(_canvas);
+            }
         }
+    }
+
+    public void Reset()
+    {
+        instance = null;
+
+        for(LevelCollectable _collectable: collectables)
+        {
+            _collectable.active = false;
+        }
+
+        for(Traps _trap: traps)
+        {
+            _trap.active = false;
+        }
+
+        collectables.clear();
+        traps.clear();
     }
 }
 

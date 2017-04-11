@@ -97,14 +97,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             highScore.update();
             CheckCollision();
         }
-//
-//        if(player.GetplayerAlive() == false)
-//        {
-//            highScore.EndGame();
-//            Intent i = new Intent(context, Menu.class);
-//            context.startActivity(i);
-//            gameRunning = false;
-//        }
+
+        if(!gameRunning)
+        {
+            highScore.EndGame();
+            TileManager.getInstance().Reset();
+            TileManager.getInstance();
+            player.Reset(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
+            player.update();
+            gameRunning = true;
+       }
 
     }
 

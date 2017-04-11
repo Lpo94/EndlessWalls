@@ -17,6 +17,7 @@ public class Player {
     private Point pos;
     private int colour;
     private boolean playerAlive;
+    private int smallDelay;
 
 
     public boolean GetplayerAlive()
@@ -44,6 +45,7 @@ public class Player {
 
     public Player(Point _pos)
     {
+        smallDelay = 1500;
         colour = new Color().RED;
         pos = _pos;
         playerRect = new Rect(100,100,200,200);
@@ -128,7 +130,11 @@ public class Player {
             pos.x += _wallRect.width()/5;
         }
     }
-
+    public void Reset(Point _point)
+    {
+        pos = _point;
+        smallDelay = 1500;
+    }
 
     public void update()
     {
@@ -143,15 +149,19 @@ public class Player {
         }
         else if(pos.y > Constants.SCREEN_HEIGHT) {
             pos.y = Constants.SCREEN_HEIGHT;
+            if(smallDelay <= 0) {
+                GameView.gameRunning = false;
+            }
+        }
+        if(smallDelay > 0)
+        {
+            smallDelay--;
         }
         playerRect.set(pos.x-playerRect.width()/2,pos.y -playerRect.height()/2,
                 pos.x+playerRect.width()/2,pos.y+playerRect.height()/2);
 
 
-        if(pos.y > Constants.SCREEN_HEIGHT - playerRect.height())
-        {
-            playerAlive = false;
-        }
+
     }
 
     public boolean Wallforce(Rect _enemyRect, Point _point)

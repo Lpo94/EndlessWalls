@@ -24,14 +24,25 @@ public class LevelCollectable extends Enemy implements LevelObject
         super();
         tileManager = TileManager.getInstance();
         this.color = _color;
+        lifetime = 2000;
 
-        int rndLeft = rnd.nextInt(Constants.SCREEN_WIDTH);
-        int rndTop = rnd.nextInt(Constants.SCREEN_HEIGHT);
+        int rndLeft = rnd.nextInt(Constants.SCREEN_WIDTH-25)+25;
+        int rndTop = rnd.nextInt(Constants.SCREEN_HEIGHT-150)+100;
         int right = rndLeft + 50;
         int bottom = rndTop + 50;
 
         // left, top, right, bottom
         rect = new Rect(rndLeft, rndTop, right, bottom);
+    }
+
+    public void update()
+    {
+        lifetime--;
+
+        if(lifetime <= 0)
+        {
+            destroy();
+        }
     }
 
     public void destroy()

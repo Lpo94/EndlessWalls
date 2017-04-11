@@ -24,7 +24,7 @@ public class Traps extends Enemy implements LevelObject
         super();
         tileManager = TileManager.getInstance();
         this.color = _color;
-
+        lifetime = 2000;
         int rndLeft = rnd.nextInt(Constants.SCREEN_WIDTH);
         int rndTop = rnd.nextInt(Constants.SCREEN_HEIGHT);
         int right = rndLeft + 50;
@@ -38,6 +38,16 @@ public class Traps extends Enemy implements LevelObject
     {
         tileManager.GetTrap().remove(this);
 
+    }
+
+    public void update()
+    {
+        lifetime--;
+
+        if(lifetime <= 0)
+        {
+            destroy();
+        }
     }
 
     @Override
