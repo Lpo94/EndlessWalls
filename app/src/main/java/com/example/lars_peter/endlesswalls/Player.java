@@ -16,6 +16,9 @@ public class Player {
     private Point pos;
     private int colour;
 
+    public float xSpeed;
+    public float ySpeed;
+
     public Rect GetRect()
     {
         return playerRect;
@@ -33,51 +36,56 @@ public class Player {
         playerRect = new Rect(100,100,200,200);
     }
 
-    public boolean PlayerCollision(Enemy _other)
+    public void PlayerCollision(Enemy _other)
     {
 
         if(_other instanceof LevelWave)
         {
             LevelWave tempObj = (LevelWave)_other;
-            Rect tempRect;
+            Rect tempRect = null;
 
             if(Rect.intersects(playerRect,tempObj.getRect1()))
             {
+                tempRect = tempObj.getRect1();
                 WallCollision(tempObj.getRect1());
-                return true;
             }
             else if(Rect.intersects(playerRect,tempObj.getRect2()))
             {
+                tempRect = tempObj.getRect2();
                 WallCollision(tempObj.getRect2());
-                return true;
             }
             else if(Rect.intersects(playerRect,tempObj.getRect3()))
             {
-
+                tempRect = tempObj.getRect3();
                WallCollision(tempObj.getRect3());
-                return true;
             }
-            return false;
+
+            if(tempRect != null)
+            {
+                while (!Wallforce(tempRect, pos))
+                {
+                    if(Wallforce(tempRect,pos))
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         else if(playerRect.intersect(_other.GetRect()))
         {
-//            DoCollision(_other);
-            return true;
+         DoCollision(_other);
+
         }
-
-
-
-
-        return false;
     }
 
     private void DoCollision(Enemy _other)
     {
-        if(_other instanceof LevelWave)
-        {
-
-        }
+        //EKSEMPEL
+//        if(_other instanceof Trap)
+//        {
+//           Highscore-51203102301;
+//        }
 
 
     }
@@ -98,9 +106,9 @@ public class Player {
             pos.x -= _wallRect.width()/5;
         }
         //Right
-        else if(playerRect.left > _wallRect.left)
+        else if(playerRect.left > _wallRect.right)
         {
-            pos.y -= _wallRect.width()/5;
+            pos.x += _wallRect.width()/5;
         }
     }
 
@@ -122,6 +130,17 @@ public class Player {
         playerRect.set(pos.x-playerRect.width()/2,pos.y -playerRect.height()/2,
                 pos.x+playerRect.width()/2,pos.y+playerRect.height()/2);
 
+    }
+
+    public boolean Wallforce(Rect _enemyRect, Point _point)
+    {
+        if(_enemyRect.contains(_point.x,_point.y))
+        {
+            WallCollision(_enemyRect);
+            return false;
+        }
+
+        return true;
     }
 
     public void Draw(Canvas _canvas)
