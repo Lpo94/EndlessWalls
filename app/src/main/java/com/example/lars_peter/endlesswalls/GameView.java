@@ -3,6 +3,7 @@ package com.example.lars_peter.endlesswalls;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -14,7 +15,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     private GameThread gameThreadThread;
     private TileManager tileManager;
-    HighScore ScoreHigh = new HighScore();
+    private HighScore highScore = new HighScore();
+
+    private Player player;
+    private OrientationData orientationData;
+
+    private long frameTime;
+
 
     public GameView(Context _context)
     {
@@ -23,7 +30,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         getHolder().addCallback(this);
         gameThreadThread = new GameThread(getHolder(), this);
         tileManager = TileManager.getInstance();
-
+        player = new Player(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
+        orientationData = new OrientationData(_context);
+        orientationData.register();
         setFocusable(true);
     }
 
@@ -61,6 +70,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     public void update()
     {
         tileManager.update();
+        int elapsedTime = (int)(System.currentTimeMillis() - frameTime);
+        frameTime = System.currentTimeMillis();
+        if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
+            float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
+            float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
+
+            float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
+            float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+
+            player.GetPos().x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
+            player.GetPos().y -= Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
+        }
+        player.update();
+        highScore.update();
+
     }
 
     @Override
@@ -68,8 +92,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     {
         super.draw(_canvas);
         _canvas.drawColor(Color.WHITE);
-
+        player.Draw(_canvas);
         tileManager.draw(_canvas);
-        ScoreHigh.draw(_canvas);
+        highScore.draw(_canvas);
     }
 }

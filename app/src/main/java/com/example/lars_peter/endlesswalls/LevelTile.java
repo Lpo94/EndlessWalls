@@ -10,7 +10,7 @@ import java.util.Random;
  * Created by SharkGaming on 07/04/2017.
  */
 
-public class LevelTile implements LevelObject
+public class LevelTile extends Enemy implements LevelObject
 {
     private int color;
     private Rect rect1;

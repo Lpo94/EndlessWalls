@@ -30,35 +30,40 @@ public class HighScore extends AppCompatActivity {
 
         settings = getPreferences(PREFERENCE_MODE_PRIVATE);
         highScore = settings.getInt("number", -1);
-        Button clicker = (Button) findViewById(R.id.Start_button);
+//        Button clicker = (Button) findViewById(R.id.Start_button);
+//
+//        clicker.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new CountDownTimer(100000, 100) {
+//                    public void onTick(long millisUntilFinished)
+//                    {
+//                        counter++;
+//                    }
+//                    public void onFinish(){
+//
+//
+//                        if (counter > highScore) {
+//
+//                            highScore = counter;
+//
+//                            settings = getPreferences(PREFERENCE_MODE_PRIVATE);
+//                            editor = settings.edit();
+//                            editor.putInt("number", highScore);
+//                            editor.commit();
+//
+//                        }
+//                    }
+//                }.start();
+//            }
+//        });
 
-        clicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new CountDownTimer(100000, 100) {
-                    public void onTick(long millisUntilFinished)
-                    {
-                        counter++;
-                    }
-                    public void onFinish(){
 
+    }
 
-                        if (counter > highScore) {
-
-                            highScore = counter;
-
-                            settings = getPreferences(PREFERENCE_MODE_PRIVATE);
-                            editor = settings.edit();
-                            editor.putInt("number", highScore);
-                            editor.commit();
-
-                        }
-                    }
-                }.start();
-            }
-        });
-
-
+    public void update()
+    {
+        CountDown();
     }
 
     public void draw(Canvas _canvas)
@@ -70,6 +75,24 @@ public class HighScore extends AppCompatActivity {
         _canvas.drawText("SCORE :" + counter, 100, 100, paint);
 
         _canvas.drawText("HIGH SCORE :" + highScore, 500, 100, paint);
+    }
+
+    public void CountDown()
+    {
+        counter++;
+    }
+
+    public void EndGame()
+    {
+        if(counter > highScore)
+        {
+            highScore = counter;
+            settings = getPreferences(PREFERENCE_MODE_PRIVATE);
+            editor = settings.edit();
+            editor.putInt("number", highScore);
+            editor.commit();
+        }
+        counter = 0;
     }
 
 }
