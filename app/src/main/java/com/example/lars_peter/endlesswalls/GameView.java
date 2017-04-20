@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +23,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     private ArrayList<Enemy> enemyList;
     private Context context;
     private Player player;
+    private int timer = 1000;
     private OrientationData orientationData;
 
     private long frameTime;
@@ -100,13 +102,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         if(!gameRunning)
         {
-            highScore.EndGame();
+
+            BetweenGames();
             TileManager.getInstance().Reset();
-            TileManager.getInstance();
-            player.Reset(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
-            player.update();
-            gameRunning = true;
-       }
+        }
 
     }
 
@@ -118,23 +117,57 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         player.Draw(_canvas);
         tileManager.draw(_canvas);
         highScore.draw(_canvas);
+
+        if(!gameRunning)
+        {
+            Paint drawPaint = new Paint();
+            drawPaint.setColor(Color.MAGENTA);
+            drawPaint.setTextSize(50);
+            _canvas.drawText((highScore.counter + " LAST SCORE! \nTime Left: " + (timer/100)),
+                    Constants.SCREEN_WIDTH/8,Constants.SCREEN_HEIGHT/2,drawPaint);
+
+        }
     }
+
+    public void BetweenGames()
+    {
+
+
+        if(!gameRunning) {
+            timer -= 1;
+
+            if (timer < 0) {
+                GameReset();
+            }
+        }
+    }
+
+    public void GameReset()
+    {
+            highScore.EndGame();
+            TileManager.getInstance();
+            player.Reset(new Point(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT-(Constants.SCREEN_HEIGHT/10)));
+            player.update();
+            gameRunning = true;
+            timer = 1000;
+
+    }
+
 
     public void CheckCollision()
     {
-        for(LevelWave tile : tileManager.GetTiles())
-        {
-            player.PlayerCollision(tile);
-        }
+        if(gameRunning) {
+            for (LevelWave tile : tileManager.GetTiles()) {
+                player.PlayerCollision(tile);
+            }
 
-        for(Traps _trap: tileManager.GetTrap())
-        {
-            player.PlayerCollision(_trap);
-        }
+            for (Traps _trap : tileManager.GetTrap()) {
+                player.PlayerCollision(_trap);
+            }
 
-        for(LevelCollectable collectable : tileManager.GetCollectables())
-        {
-            player.PlayerCollision(collectable);
+            for (LevelCollectable collectable : tileManager.GetCollectables()) {
+                player.PlayerCollision(collectable);
+            }
         }
 
     }

@@ -28,7 +28,7 @@ public class CollectableSpawner extends Thread
     @Override
     public void run()
     {
-        while(running)
+        while(GameView.gameRunning)
         {
             countingUp = true;
             long currentTime = System.currentTimeMillis();

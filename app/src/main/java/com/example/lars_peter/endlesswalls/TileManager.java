@@ -118,7 +118,7 @@ public class TileManager
         if(tiles.get(tiles.size()-1).getRect1().top > Constants.SCREEN_HEIGHT)
         {
             int xStart = ((int)(Math.random()* Constants.SCREEN_WIDTH - playerGap));
-            tiles.add(0, new LevelWave(tileHeight, color, xStart , tiles.get(0).getRect1().top + tileHeight - tileGap, playerGap));
+            tiles.add(0, new LevelWave(tileHeight, color, ((int)(Math.random()* Constants.SCREEN_WIDTH - playerGap)), tiles.get(0).getRect1().top - tileHeight - tileGap, playerGap));
             tiles.remove(tiles.size() -1);
         }
     }
@@ -149,7 +149,7 @@ public class TileManager
 
     public void Reset()
     {
-        instance = null;
+
 
         for(LevelCollectable _collectable: collectables)
         {
@@ -168,6 +168,8 @@ public class TileManager
 
         collectables.clear();
         traps.clear();
+
+        instance = null;
     }
 }
 

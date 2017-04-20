@@ -87,12 +87,12 @@ public class Player {
     {
         if(_other.active) {
             if (_other instanceof LevelCollectable) {
-                HighScore.counter += 10;
+                HighScore.counter += 1000;
                 ((LevelCollectable) _other).destroy();
             }
 
             if (_other instanceof Traps) {
-                HighScore.counter -= 1000;
+                HighScore.counter -= 500;
                 ((Traps) _other).destroy();
             }
         }
